@@ -1,0 +1,78 @@
+1.Java 6 설치 - 사과- 소프트웨어 업데이트
+ 이클립스 설치 - www.eclipse.org/downloads - Eclipse IDE for JAVA EE Developers
+ 구글 앱 엔진 설치 - 이클립스-> Help > Install New Software > Available Software > ADD >
+Location : http://dl.google.com/eclipse/plugin/3.5 > 구글 앱 엔진 SDK, Google Plugin for Eclipse 3.5 선택 > Install
+
+2. 구굴 앱 엔진은 Java EE 5 의 자바 서블릿 표준과 웹 애플리케이션 디렉토리 구조 표준인 WAR를 따름.
+
+3. http://localhost:8888 
+
+4. 구글 앱 계정 생성  http://appengine.google.com
+
+5. JUnit -> http://jwebunit.sourceforge.net
+ New -> Other-> JUnit Test Case 창에서 Package -> mytest
+                  Name -> Example  만든다.
+Which method stubs~~~~? 나오면 setUp()과 tearDown() 선택(메서드 미리 생성해주는 것) -> Finish
+JUnit이 클래스 패스 빌드 경로 설정하면 테스트 케이스가 자동으로 작성됨 (src/mytest/Example.java)
+이 파일 클래스 안에 이 내용 추가함
+public void testExample() throws Exception{
+	assertEquals(1, 1);
+}
+
+Run>Run As>JUnit Test ->Eclipse JUnit Test
+
+http://easymock.org/Downloads.html  > 3.1버젼 다운로드하여 압축 풀면 easymock-3.1.jar파일이 있다.
+이 jar를 프로젝트의 Build Path에 포함시킨다. 그리고 테스트 케이스(/mytest/ExampleMockTestCase.java)를 만든다.
+그리고 JUnit으로 실행하면 된다. 
+
+이클립스 플러그인 디렉토리/com.google.appengine.eclipse.sdkbundle_1.7.0/appengine-java-sdk-1.7.0/lib/impl
+위의 디렉토리에서 appengine-api-stubs.jar, appengine-local-runtime.jar를 클래스 패스에 포함하도록 설정
+
+테스트환경 셋업 클래스 생성(mytest/TestEnvironment.java), 이 클래스는 appengine-web.xml 파일 성정대로
+JUnit 컨테이너가 동작하게 한다. 그리고 ApiProxy.Environment를 테스팅 환경으로 만들어 Apiproxy로 등록할 수 있게 한다.
+
+6. 데이터스토어 http://localhost:8080/_ah/admin/  ->엔티티에 저장된 경로 확인 가능
+  JPA(Java Persistence API) -> RDBMS지원
+  JDO(Java Data Object) -> 저장매체지원 (우리 앱은 이 방식 채택)
+
+  JDO 인터페이스 쓰려면 적어도 PersistenceManagerFactory 객체 하나 필요
+  PersistenceManagerFactory 는 무거운 객체 이므로 싱글톤패턴 사용.
+  
+  src/KAKAO의  PMF클래스를 활용하여 데이터스토어에 사용자 정보를 저장할 수 있다.
+  프로젝트에 test 패키지를 만들고 ShopUserTestCase 클래스를 JUnit 테스트케이스로 만들어..
+  거기에 test/ShopUserTestCase.java를 넣어..
+
+  ShopUserTestCase는 BaseTestCase를 확장한다. ShopUserTestCase 이 사용자 정보는 TestEnvrionment클래스의
+ 설정에 의해 만들어진다. ShopUserTestCase에 makePersistent() 메서드가 성공적으로 실행되면 저장한 객체를
+리턴하고, 그 바로 밑에서 결과 객체의 email을 점검해본다. 
+만약 JDOQL을 사용하고싶다면 http://db.apache.org/jdo/index.html
+
+쿼리와 수정 & 삭제 는 test/ShowUserTestCase.java보면 나와있다.
+
+7. 연결
+  http 통신만이 가능하기 때문에 서블릿 통신을 주로 이용한다.
+  서블릿 정보는 war/WEB-INF/web.xml  여기서 정보 수정하면되는데..
+  ex)
+    …
+	<servlet>
+		<servlet-name>User</servlet-name>
+		<servlet-class>KAKAO.UserServlet</servlet-class>
+	</servlet>
+    …
+    …
+	<servlet-mapping>
+		<servlet-name>User</servlet-name>
+		<url-pattern>/user/*</url-pattern>
+	</servlet-mapping>
+    …
+
+8. 이미지 업로드 /kakao/UserServlet.java  여기에 파일 있어..
+너의 패키지명을 잘 몰라서 KAKAO라고 다 추가했고..
+5일동안 책보면서 했는데 난잡할거야..ㅠ
+또 만나서 맞춰보자 그때까지 이거 해 봐~!
+
+
+
+
+
+

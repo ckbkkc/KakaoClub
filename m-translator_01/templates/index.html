@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Hello Google App Engine{% endblock title %}
+{% block script %}
+<link rel="stylesheet" type="text/css" href="/static/css/layout.css" >
+{% endblock script %}
+{% block content %}
+    <div class="innercontent">
+    	<div id="login">
+        {% if user_info %}
+            	안녕하세요{{user_info.nickname}}님 <a href="{{static_path.logout}}">로그아웃</a>
+        {% else %}
+            <a href="/user/login/">로그인</a>
+        {% endif %}
+        </div>
+        <div id="maincontent">
+        	[글 리스트]</br>
+        	<ul>
+        	{% for c in contents %}
+        	<li><a href="/content/{{c.key.id}}/read/">{{c.title}}</a>({{c.post_time|date:"Y-M-D"}})</br>
+        	{% endfor %}
+        </div>
+    </div>
+{% endblock content %}

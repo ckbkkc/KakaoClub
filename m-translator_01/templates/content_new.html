@@ -1,0 +1,31 @@
+{% extends "base.html" %}<!-- content_new -->
+{% block title %}Hello Google App Engine{% endblock title %}
+{% block script %}
+<link rel="stylesheet" type="text/css" href="/static/css/layout.css" >
+{% endblock script %}
+{% block content %}
+    <div class="innercontent">
+    	<div id="login">
+        {% if user_info %}
+            	안녕하세요{{user_info.nickname}}님 <a href="{{static_path.logout}}">로그아웃</a>
+        {% else %}
+            <a href="/user/login/">로그인</a>
+        {% endif %}
+        </div>
+        <div id="maincontent">
+        	[새 글 등록]<br/>
+        	<form action="./" method="POST">
+        		<input type="hidden" id="csrfmiddlewaretoken" value="{{ csrfmiddlewaretoken }}">
+        		<table>
+        			<tr><th><label>닉네임</label></th><td>{{ user_info.nickname }}</td></tr>
+        			<tr><th><label>이메일</label></th><td>{{ user_info.email }}</td></tr>
+        			{{ form.as_table }}
+        		</table>
+        		<input type="submit" name="submit" id="submit" value="Save"/>
+        		<input type="button" name="go_home" id="go_hone" value="Cancel" onClick="history.go(-1)"/>
+        	</form>
+        </div>
+    </div>
+    
+    
+{% endblock content %}

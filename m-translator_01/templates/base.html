@@ -1,0 +1,18 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link href="{{ static_path.css }}/base.css" type="text/css" rel="stylesheet">
+		<title>{% block title %}Welcome my appengine {% endblock title %}</title>
+		{% block script %}{% endblock script %}
+	</head>
+	<body>
+		<div id="menu">
+		    <div class="topmenu">
+                <a href="{{static_path.mainpage}}"> 처음으로</a> | 
+                <a href="{{static_path.write}}">새 공지사항 등록</a> | 
+                <a href="{{static_path.api}}">API 확인</a>
+            </div>
+        </div>
+		<div id="content">{% block content %}{% endblock content %}</div>
+	</body>
+</html>
