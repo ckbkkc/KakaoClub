@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
 	     
 	        try
 	        {
-	        	result = JSONClient.GetStringFromServer(param[0]);
+	        	result = JSONClient.GetStringFromServer(param[0], param[1]);
 	        }
 	        catch (Exception e)
 	        {
